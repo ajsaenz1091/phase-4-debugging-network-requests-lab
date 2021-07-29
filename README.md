@@ -64,10 +64,29 @@ developing your own process.
 
   - How I debugged:
 
+   - submit the toy form and check for errors
+   - my error in rails server uninitialized constant ToysController::Toys
+   - Take a look at the Toys Controller
+   - Line 10 in app/controllers/toys_controller.rb was making the worng use of the Toy model "toy = Toys.create(toy_params)". Proceed to change Toys to Toy and submit the for again.
+   - Issue solved
+
 - Update the number of likes for a toy
 
   - How I debugged:
 
+   - Click the likes button and watch behaviour
+   - Looked at Network tab in dev tools response came back with Status Code: 204 No Content
+   - My guess is that the action is not returning the updated toy. Look at the action update in the toys_controller
+   - Add this line as the last line in the update action render json: toy and click likes button again
+   - Issue solved
+
 - Donate a toy to Goodwill (and delete it from our database)
 
   - How I debugged:
+   - Click the "Donate to DoodWill" button and watch behaviour
+   - Looked at Network tab in dev tools response came back with Status Code: 404 Not Found
+   - the server gave me this error ActionController::RoutingError (No route matches [DELETE] "/toys/1"):
+   - From that last error I assume there is a missing rout for delete 
+   - Update resource to look like this "resources :toys, only: [:index, :create, :update, :destroy]"
+   - Try "Donate to DoodWill" button again
+   - Issue Solved
